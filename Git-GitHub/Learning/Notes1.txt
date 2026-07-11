@@ -1,0 +1,152 @@
+*The Three Stages of Git:-
+  1. Working Directory  →  2. Staging Area  →  3. Repository
+     (where you edit)      (files ready to save)  (permanently saved)
+
+****************************************************
+
+*Some Keywords:-
+   pwd -  Present Working Directory
+
+   cd "Folder_name"   -  Change Directory
+   # Navigate to your project folder
+
+   ls -> list
+   # It shows all the files and folders in your current directory (folder).
+
+   ls -a 
+   # Show hidden files
+
+   ls -l
+   # Show detailed information
+
+   ls -la
+   # Combine both
+
+   Windows Command Prompt (cmd), the equivalent command is:
+   dir
+
+   mkdir folder_name
+   # It is a command used to create a new folder (directory).
+
+
+****************************************************
+
+*Commands:-
+    git init
+    → Initialize a Git repository
+
+    git status
+    → Check repository status
+
+    git add .
+    → Stage all files
+
+    git commit -m "message"
+    → Create a commit and Save a snapshot
+
+    git log
+    → Show commit history
+
+    git diff
+    → See line-by-line changes
+      It compares:-
+        Your working directory (current files)
+        With the staging area (what you've added using git add)
+ 
+
+    rm -rf *
+    Delete everything in the current folder and all its subfolders without asking for confirmation.
+
+    rm -rf .git
+    This removes Git tracking but leaves files like index.html, style.css, etc., untouched.
+
+
+****************************************************
+
+//gitignore and gitkeep:-
+
+What is .gitignore?
+  Sometimes we have files we do NOT want Git to track. For example:
+  Password files
+  Temporary files
+  Large data files
+  Files that can be regenerated
+ The .gitignore file tells Git which files to ignore.
+
+Create a file named .gitignore in your project root folder (note the dot at the beginning).
+
+Inside this file, list the files and folders you want Git to ignore:
+
+
+What is .gitkeep?
+  Git does not track empty folders. But sometimes you need to keep an empty folder in your repository.
+
+  Problem: Suneo creates an uploads folder where users will upload files later. The folder is empty now, but he wants it in the repository.
+
+  Solution: Create an empty file called .gitkeep inside the folder.
+
+
+
+****************************************************
+
+Undoing Changes :-
+Everyone makes mistakes. Git provides several ways to undo changes depending on where the changes are (Working Directory, Staging Area, or Repository).
+
+to print a data of a file we use "cat fileName"      e.g.- cat Learning/Notes.txt
+
+
+****************************************************
+
+//Understanding Branches:-
+Branches are one of Git's most powerful features. They let you work on new features without breaking the main code.
+
+//Why Use Branches?
+Imagine this scenario:
+
+Gian's main code is working perfectly
+Nobita wants to add a new login feature
+While Nobita is working, the login feature is half-done and broken
+If Nobita works directly on the main code, he will break it for everyone
+Solution: Nobita creates a separate branch to work on the login feature. The main code stays working while he experiments.
+
+//Creating a Branch :-
+# Create a new branch
+git branch feature-login(this is branch name)
+
+# Switch to that branch
+git Switch feature-login           
+          or
+git checkout feature-login
+
+
+# Or do both in one command
+git checkout -b feature-login
+          or
+git switch -c feature-login
+
+Switched to a new branch 'feature-login'
+
+
+//Listing Branches:-
+git branch
+
+      main
+    * feature-login
+
+# The * shows which branch you are currently on
+
+
+//Switching Branches:-
+# Switch to main branch
+git checkout main
+
+# Switch to feature branch
+git checkout feature-login
+
+
+//Deleting a Branch:-
+# Delete a branch (after merging)
+git branch -d feature-login
+
+# Force delete (even if not merged)
+git branch -D feature-login

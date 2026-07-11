@@ -1,0 +1,217 @@
+Note:- We can check git branch only after commit
+//Some important command used in branch repeatedely
+# To create and switch to new branch
+  git switch -c feature
+
+# Check the graph
+  git log --oneline --graph --all
+
+****************************************************
+
+Merging Branches:-
+When you finish working on a feature branch, you bring those changes back into the main branch. This is called merging. Git has four types of merges — each works differently depending on the situation.
+
+1. Fast Forward Merge:-
+This is the simplest merge. It happens when the main branch has no new commits since you created the feature branch. Git simply moves the main pointer forward — no extra merge commit is created.
+
+When does it happen?
+Gian creates a feature branch, adds a file, and commits. Meanwhile, nobody touches main. When Gian merges back, Git just slides main forward.
+
+Practical Steps:-
+# Step 1: Create and switch to feature branch
+  git switch -c feature
+
+# Step 2: Create a new file and commit
+  echo "Feature Code" > feature.txt
+  git add .
+  git commit -m "added feature file"
+
+# Step 3: Switch back to main
+  git switch main
+
+# Step 4: Merge
+  git merge feature
+
+Updating a1b2c3d..f4e5d6c
+Fast-forward
+ feature.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+ Key Point:-
+The output says Fast-forward. No merge commit was created. Git just moved the main branch pointer ahead.
+
+# Check the graph
+  git log --oneline --graph --all
+
+****************************************************
+
+2. Three-Way Merge
+This happens when both the main branch and the feature branch have new commits after the branch was created. Git cannot simply slide the pointer forward — it has to create a new merge commit that combines both histories.
+
+When does it happen?
+Nobita creates a login-feature branch and adds login.txt. Meanwhile, Gian also adds main.txt on main. Now both branches have diverged. Git needs a merge commit to join them.
+
+Practical Steps:-
+# Step 1: Create login-feature branch
+  git switch -c login-feature
+
+# Step 2: Add a file on the feature branch
+  echo "Login Feature" > login.txt
+  git add .
+  git commit -m "added login"
+
+# Step 3: Switch back to main and add a different file
+  git switch main
+  echo "Main Update" > main.txt
+  git add .
+  git commit -m "main updated"
+
+# Step 4: Merge with -m to avoid Vim editor
+  git merge login-feature -m "three way merge completed"
+
+Merge made by the 'ort' strategy.
+ login.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+
+Key Point:-
+The output says Merge made by the 'ort' strategy. A new merge commit M was created that has two parents — one from main and one from login-feature.
+
+****************************************************
+
+3. Squash Merge:-
+Squash merge takes all the commits from a feature branch and squashes them into one single commit on main. The individual commits from the feature branch are not preserved — only the final result is added as one clean commit.
+
+When to use it?
+Suneo worked on the UI and made 3 small commits — navbar, footer, sidebar. Instead of cluttering main's history with 3 commits, Gian squashes them into one clean commit called "UI Feature Complete".
+
+Practical Steps:-
+# Step 1: Create ui-feature branch
+  git switch -c ui-feature
+
+# Step 2: Make multiple commits
+  echo "Navbar" > navbar.txt
+  git add .
+  git commit -m "navbar added"
+
+  echo "Footer" > footer.txt
+  git add .
+  git commit -m "footer added"
+
+  echo "Sidebar" > sidebar.txt
+  git add .
+  git commit -m "sidebar added"
+
+# Step 3: Switch to main
+  git switch main
+
+# Step 4: Squash merge (stages all changes but does NOT commit yet)
+  git merge --squash ui-feature
+
+Squash commit -- not updating HEAD
+Automatic merge went well; stopped before committing as requested
+
+# Step 5: Commit manually with one clean message
+git commit -m "UI Feature Complete"
+
+Key Point:-
+--squash stages all the changes but does NOT create a commit automatically. You must run git commit yourself with a clean message. The 3 individual commits from ui-feature will not appear in main's history.
+
+****************************************************
+
+4. Octopus Merge:-
+Octopus merge lets you merge more than two branches at the same time in a single command. Git creates one merge commit that has multiple parents — one for each branch merged.
+
+When to use it?
+Gian, Nobita, and Suneo each worked on separate independent features — feature-a, feature-b, feature-c. None of them conflict with each other. Gian merges all three into main in one go.
+
+Practical Steps:-
+# Branch 1: feature-a
+  git switch -c feature-a
+  echo "A Feature" > a.txt
+  git add .
+  git commit -m "feature a"
+
+# Branch 2: feature-b
+  git switch main
+  git switch -c feature-b
+  echo "B Feature" > b.txt
+  git add .
+  git commit -m "feature b"
+
+# Branch 3: feature-c
+  git switch main
+  git switch -c feature-c
+  echo "C Feature" > c.txt
+  git add .
+  git commit -m "feature c"
+
+# Switch to main and merge all three at once
+  git switch main
+  git merge feature-a feature-b feature-c -m "octopus merge all features"
+
+Trying simple merge with feature-a
+Trying simple merge with feature-b
+Trying simple merge with feature-c
+Merge made by the 'octopus' strategy.
+
+Key Point:-
+The output says Merge made by the 'octopus' strategy. One merge commit was created with three parents. This only works when there are no conflicts between the branches.
+
+
+
+Merge Conflicts:-
+A merge conflict happens when two people edit the SAME lines in the SAME file. Git does not know which version to keep, so it asks you to decide.
+
+What a Conflict Looks Like
+Git modifies the conflicted file to show both versions:
+
+<<<<<<< HEAD
+Total Score: 100
+=======
+Total Score: 200
+>>>>>>> feature-scoring
+
+Resolving the Conflict :-
+
+Step 1: Open the File
+Open score.txt in your text editor. You will see the conflict markers.
+
+Step 2: Decide What to Keep
+You have three options:
+
+Keep your version (100)
+Keep their version (200)
+Keep both or write something new
+Let's say Gian decides to keep Nobita's version (200). Edit the file to:
+Total Score: 200
+Important: Remove ALL conflict markers (<<<<<<<, =======, >>>>>>>)
+
+Step 3: Stage the Resolved File
+git add score.txt
+
+Step 4: Complete the Merge
+git commit -m "Resolve merge conflict - use score 200"
+
+[main a1b2c3d] Resolve merge conflict - use score 200
+
+Checking for Conflicts:-
+# See which files have conflicts
+git status
+
+Unmerged paths:-
+  both modified:   score.txt
+
+Aborting a Merge:-
+If you want to cancel the merge and start over:
+git merge --abort
+
+Conflict Resolution Steps Summary:-
+1. Run git status to see conflicted files
+2. Open each file and look for <<<<<<< markers
+3. Decide which code to keep
+4. Remove all conflict markers
+5. Save the file
+6. git add filename
+7. git commit
+
