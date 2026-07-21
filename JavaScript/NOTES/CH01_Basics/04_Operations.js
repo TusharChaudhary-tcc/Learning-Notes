@@ -35,3 +35,26 @@ let counter=100;
 console.log(counter++);    // Post increment : Firstly print the value and then increase that
 console.log(++counter);    // Pre increment : Firstly increase the value and then print that
 
+
+
+console.log("2"==2);       // when we compare string with number it automatically convert string to number
+
+
+console.log(null>0);       // false
+console.log(null==0);      // false
+console.log(null>=0);      // true
+console.log(null<=0);      // true
+
+console.log(undefined>0);       //Always false when compare with undefined
+console.log(undefined<0);
+console.log(undefined==0);
+
+
+
+// strict check :- 
+// -> === compares both value and data type.
+// -> Returns true only if both are the same.
+// -> No type conversion (type coercion) is performed.
+
+console.log(10 === "10")     // false;
+
