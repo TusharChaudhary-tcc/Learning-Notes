@@ -31,5 +31,38 @@ Commands:-
     This removes Git tracking but leaves files like index.html, style.css, etc., untouched.
 
 
+--------------------------------------------------------------------------
 
-    
+## How to know which folder actually contains .git
+
+- Run this command:
+
+```bash
+git rev-parse --show-toplevel
+```
+
+- Example output
+C:\Users\Tushar\Documents\Learning Notes
+
+- This tells you:
+The Git repository root is Learning Notes.
+
+--------------------------------------------------------------------------
+
+## How to see which GitHub repository it is connected to
+
+- Run:
+
+```bash
+git remote -v
+```
+Example:
+origin  git@github.com:TusharChaudhary-tcc/Learning-Notes.git (fetch)
+origin  git@github.com:TusharChaudhary-tcc/Learning-Notes.git (push)
+
+
+---
+These answer two different questions:
+
+`git rev-parse --show-toplevel` → Which folder is the repository root?
+`git remote -v` → Which GitHub repository is this connected to?
