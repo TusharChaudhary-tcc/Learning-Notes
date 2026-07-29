@@ -19,17 +19,54 @@
     Object (Array, Date, Function, etc.) 
 */
 
+// Array Example
+const heroes=["Shaktiman", "naagraj", "doga"];
+console.log(heroes);
 
+// Object Example
+let myObj={
+  name:"Tushar",
+  age: 18
+}
+console.log(myObj);
+
+// Function Example
+const myFunc=function(){
+  console.log("Hello World");
+}
+myFunc();
+
+
+
+// typeof Null is "object"
 
 // typeof Operator - Used to check the data type of a value.
-console.log(typeof 10);             // number
-console.log(typeof "Tushar");       // string
-console.log(typeof null);              // object
-console.log(typeof undefined);         // undefined
+// console.log(typeof 10);             // number
+// console.log(typeof "Tushar");       // string
+// console.log(typeof null);              // object
+// console.log(typeof undefined);         // undefined
+let num=32425452545432324355n;
+console.log(typeof num);                  // bigint
+
+let s1=Symbol("142");
+let s2=Symbol("142");
+console.log(typeof s1);
+console.log(s1==s2);
+// Even though both symbols have the same description ("142"), they are different and unique.
 
 
 
-console.table([typeof 18, typeof "Tushar", typeof null, typeof undefined]);
+// console.log(typeof heroes);              // typeof array is object
+// console.log(typeof myObj);               // typeof object is object
+// console.log(typeof myFunc);              // typeof function is function
+
+
+
+
+
+
+
+// console.table([typeof 18, typeof "Tushar", typeof null, typeof undefined]);
 
 
 
