@@ -67,3 +67,4 @@ git pull origin main
     If Git refuses because the branch isn't merged, and you're certain you don't need any commits on that local branch, you can use:    git branch -D font_scroll
 
 3. To remove the branch information fetched from GitHub
+    git fetch --prune
